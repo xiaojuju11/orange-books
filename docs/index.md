@@ -2,7 +2,7 @@
 layout: home
 
 hero:
-  name: 橙子书库
+  name: 小橘书房
   text: 每天学一点，写成一本
   tagline: 六本书同时在长，哪本在写、哪本排队，一眼能看见
   actions:

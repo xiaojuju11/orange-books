@@ -3,7 +3,7 @@ import { BOOKS, buildSidebars } from './utils/books'
 
 export default defineConfig({
   lang: 'zh-CN',
-  title: '橙子书库',
+  title: '小橘书房',
   description: '把每天学的东西，写成一本本可以读完的书',
   // 部署到 GitHub Pages 时由工作流注入 /仓库名/，本地开发默认根路径
   base: process.env.DOCS_BASE || '/',
@@ -63,7 +63,7 @@ export default defineConfig({
     ],
 
     footer: {
-      message: '每天一点，写成一本。',
+      message: '小橘书房 · 每天一点，写成一本。',
       copyright: '仅用于个人学习记录',
     },
   },
