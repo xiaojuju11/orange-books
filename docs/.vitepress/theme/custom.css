@@ -1,49 +1,489 @@
-/* 橙子书库：偏暖的阅读主题，正文宽度收窄，长文更耐读 */
+/* ============================================================
+   小橘书房 · 现代极简暖橙主题 (Light & Clean Orange Theme)
+   参考 LangChain.js / Vue.js 官方文档：
+   特点：底色极浅极净、呼吸感强、告别沉闷浑浊的土黄，橙色点缀克制精致
+   ============================================================ */
 
 :root {
+  /* ---- 品牌色：活力小橘橙 ---- */
+  --vp-c-brand-1: #ea580c;
+  --vp-c-brand-2: #f97316;
+  --vp-c-brand-3: #fdba74;
+  --vp-c-brand-soft: rgba(249, 115, 22, 0.08);
+  --vp-c-brand-light: rgba(249, 115, 22, 0.025);
+
+  /* ---- 字体族 ---- */
   --vp-font-family-base:
-    'Inter var', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC',
+    -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC',
     'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
   --vp-font-family-mono:
     'JetBrains Mono', 'Cascadia Code', 'Fira Code', Consolas, monospace;
 
-  --vp-c-brand-1: #d1541f;
-  --vp-c-brand-2: #ea6a2c;
-  --vp-c-brand-3: #f08a52;
-  --vp-c-brand-soft: rgba(234, 106, 44, 0.14);
+  /* ---- 基础背景与底色（干净、极淡） ---- */
+  --vp-c-bg-soft: #faf9f8;
+
+  /* ---- 彻底覆盖 VitePress 默认的土黄警告变量 ---- */
+  --vp-c-warning-1: #ea580c;
+  --vp-c-warning-2: #f97316;
+  --vp-c-warning-3: #fed7aa;
+  --vp-c-warning-soft: #fffaf5;
+
+  --vp-custom-block-warning-bg: #fffaf5;
+  --vp-custom-block-warning-border: #fed7aa;
+  --vp-custom-block-warning-text: var(--vp-c-text-1);
+  --vp-custom-block-warning-code-bg: #f3f4f6;
+
+  --vp-c-tip-1: #059669;
+  --vp-c-tip-2: #10b981;
+  --vp-c-tip-3: #a7f3d0;
+  --vp-c-tip-soft: #f6fbf9;
+
+  --vp-custom-block-tip-bg: #f6fbf9;
+  --vp-custom-block-tip-border: #a7f3d0;
+  --vp-custom-block-tip-text: var(--vp-c-text-1);
+  --vp-custom-block-tip-code-bg: #f3f4f6;
+
+  --vp-c-danger-1: #dc2626;
+  --vp-c-danger-2: #ef4444;
+  --vp-c-danger-3: #fecaca;
+  --vp-c-danger-soft: #fff5f5;
+
+  --vp-custom-block-danger-bg: #fff5f5;
+  --vp-custom-block-danger-border: #fecaca;
+  --vp-custom-block-danger-text: var(--vp-c-text-1);
+  --vp-custom-block-danger-code-bg: #f3f4f6;
+
+  --vp-custom-block-info-bg: #fbfbfa;
+  --vp-custom-block-info-border: #fed7aa;
+  --vp-custom-block-info-text: var(--vp-c-text-1);
+  --vp-custom-block-info-code-bg: #f3f4f6;
 }
 
 .dark {
-  --vp-c-brand-1: #f08a52;
-  --vp-c-brand-2: #ea6a2c;
-  --vp-c-brand-3: #d1541f;
-  --vp-c-brand-soft: rgba(234, 106, 44, 0.16);
+  --vp-c-brand-1: #fb923c;
+  --vp-c-brand-2: #f97316;
+  --vp-c-brand-3: #ea580c;
+  --vp-c-brand-soft: rgba(249, 115, 22, 0.16);
+  --vp-c-brand-light: rgba(249, 115, 22, 0.06);
+  --vp-c-bg-soft: #1a1a1c;
+
+  --vp-custom-block-warning-bg: rgba(249, 115, 22, 0.08);
+  --vp-custom-block-warning-border: rgba(249, 115, 22, 0.25);
+  --vp-custom-block-tip-bg: rgba(16, 185, 129, 0.08);
+  --vp-custom-block-tip-border: rgba(16, 185, 129, 0.25);
+  --vp-custom-block-danger-bg: rgba(239, 68, 68, 0.08);
+  --vp-custom-block-danger-border: rgba(239, 68, 68, 0.25);
+  --vp-custom-block-info-bg: rgba(255, 255, 255, 0.04);
+  --vp-custom-block-info-border: rgba(255, 255, 255, 0.1);
 }
 
-/* 读书的正文别铺满整屏 */
+/* ------------------------------------------------------------
+   阅读区域排版：正文限制到舒适宽度，行距舒展自然
+   ------------------------------------------------------------ */
 @media (min-width: 960px) {
   .VPDoc .content-container {
-    max-width: 46rem;
+    max-width: 48rem;
   }
 }
 
-/* 正文行距和段间距，默认偏紧 */
 .vp-doc p,
 .vp-doc li {
   line-height: 1.85;
+  font-size: 15.5px;
+  color: var(--vp-c-text-1);
+}
+
+.vp-doc p {
+  margin: 1.15em 0;
+}
+
+/* 链接装饰 */
+.vp-doc a {
+  text-decoration-color: var(--vp-c-brand-3);
+  text-underline-offset: 3px;
+  transition: color 0.2s, text-decoration-color 0.2s;
+}
+
+.vp-doc a:hover {
+  color: var(--vp-c-brand-2);
+  text-decoration-color: var(--vp-c-brand-2);
+}
+
+/* ------------------------------------------------------------
+   标题样式：简约克制，带精致细竖条
+   ------------------------------------------------------------ */
+.vp-doc h1 {
+  font-size: 2.1rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-bottom: 1.5rem;
+  color: var(--vp-c-text-1);
 }
 
 .vp-doc h2 {
-  margin-top: 2.75rem;
-  padding-top: 1.5rem;
+  position: relative;
+  margin-top: 3.2rem;
+  padding-top: 1.6rem;
+  padding-left: 0.85rem;
+  font-size: 1.48rem;
+  font-weight: 650;
   border-top: 1px solid var(--vp-c-divider);
 }
 
-.vp-doc h3 {
-  margin-top: 2rem;
+.vp-doc h2::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 1.85rem;
+  bottom: 0.35rem;
+  width: 3.5px;
+  border-radius: 3px;
+  background: var(--vp-c-brand-1);
 }
 
-/* 首页书卡 */
+.vp-doc h3 {
+  margin-top: 2.2rem;
+  font-size: 1.22rem;
+  font-weight: 600;
+  color: var(--vp-c-text-1);
+}
+
+/* ------------------------------------------------------------
+   引言块 (Blockquote)：通透极浅，不沉闷
+   ------------------------------------------------------------ */
+.vp-doc blockquote {
+  position: relative;
+  margin: 1.6rem 0;
+  padding: 0.9rem 1.3rem;
+  border-left: 3.5px solid var(--vp-c-brand-2);
+  border-radius: 0 8px 8px 0;
+  background: #fffaf5;
+  color: var(--vp-c-text-2);
+  font-style: normal;
+  border-top: 1px solid #fef3c7;
+  border-right: 1px solid #fef3c7;
+  border-bottom: 1px solid #fef3c7;
+}
+
+.dark .vp-doc blockquote {
+  background: rgba(249, 115, 22, 0.05);
+  border-color: rgba(249, 115, 22, 0.15);
+}
+
+.vp-doc blockquote p {
+  margin: 0.3em 0;
+  line-height: 1.75;
+}
+
+/* ------------------------------------------------------------
+   重点卡片 (Custom Block / Callouts) —— 关键重构！
+   彻底换成极其淡雅的浅色，绝无沉闷土黄！
+   ------------------------------------------------------------ */
+.custom-block {
+  border-radius: 8px !important;
+  margin: 1.6rem 0 !important;
+  padding: 14px 18px !important;
+  line-height: 1.75 !important;
+  font-size: 14.5px !important;
+  box-shadow: none !important;
+}
+
+/* 警告卡片 Warning（例如：翻车现场）
+   极浅淡白橙底色 #fffaf5 + 细腻微描边 + 左侧活力橙细线 */
+.custom-block.warning {
+  border: 1px solid #fed7aa !important;
+  border-left: 3.5px solid #f97316 !important;
+  background-color: #fffaf5 !important;
+  color: var(--vp-c-text-1) !important;
+}
+
+.custom-block.warning .custom-block-title {
+  color: #c2410c !important;
+  font-weight: 650 !important;
+  font-size: 15px !important;
+  margin-bottom: 6px !important;
+}
+
+.dark .custom-block.warning {
+  border: 1px solid rgba(249, 115, 22, 0.25) !important;
+  border-left: 3.5px solid #f97316 !important;
+  background-color: rgba(249, 115, 22, 0.08) !important;
+}
+
+.dark .custom-block.warning .custom-block-title {
+  color: #fb923c !important;
+}
+
+/* 提示卡片 Tip —— 极淡薄荷水色 */
+.custom-block.tip {
+  border: 1px solid #a7f3d0 !important;
+  border-left: 3.5px solid #10b981 !important;
+  background-color: #f6fbf9 !important;
+  color: var(--vp-c-text-1) !important;
+}
+
+.custom-block.tip .custom-block-title {
+  color: #047857 !important;
+  font-weight: 650 !important;
+  font-size: 15px !important;
+  margin-bottom: 6px !important;
+}
+
+.dark .custom-block.tip {
+  border: 1px solid rgba(16, 185, 129, 0.25) !important;
+  border-left: 3.5px solid #10b981 !important;
+  background-color: rgba(16, 185, 129, 0.08) !important;
+}
+
+.dark .custom-block.tip .custom-block-title {
+  color: #34d399 !important;
+}
+
+/* 消息卡片 Info —— 极淡柔和浅灰橙 */
+.custom-block.info {
+  border: 1px solid #fed7aa !important;
+  border-left: 3.5px solid #ea580c !important;
+  background-color: #fbfbfa !important;
+  color: var(--vp-c-text-1) !important;
+}
+
+.custom-block.info .custom-block-title {
+  color: #ea580c !important;
+  font-weight: 650 !important;
+  font-size: 15px !important;
+  margin-bottom: 6px !important;
+}
+
+.dark .custom-block.info {
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  border-left: 3.5px solid #fb923c !important;
+  background-color: rgba(255, 255, 255, 0.04) !important;
+}
+
+/* 危险卡片 Danger —— 极淡淡红 */
+.custom-block.danger {
+  border: 1px solid #fecaca !important;
+  border-left: 3.5px solid #ef4444 !important;
+  background-color: #fff5f5 !important;
+  color: var(--vp-c-text-1) !important;
+}
+
+.custom-block.danger .custom-block-title {
+  color: #b91c1c !important;
+  font-weight: 650 !important;
+  font-size: 15px !important;
+  margin-bottom: 6px !important;
+}
+
+.dark .custom-block.danger {
+  border: 1px solid rgba(239, 68, 68, 0.25) !important;
+  border-left: 3.5px solid #ef4444 !important;
+  background-color: rgba(239, 68, 68, 0.08) !important;
+}
+
+/* 修复行内代码块被染黄的问题：一律采用干净的素雅微浅灰底色 */
+.custom-block code {
+  background-color: #f1f3f5 !important;
+  border: 1px solid #e2e8f0 !important;
+  color: var(--vp-c-text-1) !important;
+  border-radius: 4px !important;
+  padding: 1px 5px !important;
+  font-size: 13px !important;
+}
+
+.dark .custom-block code {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+}
+
+/* ------------------------------------------------------------
+   掘金风格行内代码 (Inline Code)：高对比微底色，技术名词一眼识别
+   ------------------------------------------------------------ */
+.vp-doc :not(pre) > code {
+  font-family: var(--vp-font-family-mono);
+  font-size: 0.88em;
+  color: #c2410c;
+  background-color: rgba(249, 115, 22, 0.08);
+  padding: 2px 6px;
+  margin: 0 3px;
+  border-radius: 4px;
+  border: 1px solid rgba(249, 115, 22, 0.16);
+  word-break: break-word;
+}
+
+.dark .vp-doc :not(pre) > code {
+  color: #fb923c;
+  background-color: rgba(249, 115, 22, 0.15);
+  border-color: rgba(249, 115, 22, 0.28);
+}
+
+/* 列表标记美化：橙色着色圆点与加粗序号 */
+.vp-doc ul > li::marker {
+  color: var(--vp-c-brand-2);
+}
+
+.vp-doc ol > li::marker {
+  font-weight: 600;
+  color: var(--vp-c-brand-1);
+}
+
+/* ------------------------------------------------------------
+   掘金 / Mac 风格代码块：带红黄绿控制点，沉浸式终端质感
+   ------------------------------------------------------------ */
+.vp-doc div[class*='language-'] {
+  position: relative;
+  border-radius: 8px;
+  margin: 1.4rem 0;
+  padding-top: 1.8rem;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.03);
+}
+
+.vp-doc div[class*='language-']::before {
+  content: "";
+  position: absolute;
+  top: 11px;
+  left: 14px;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #ff5f56;
+  box-shadow: 14px 0 0 #ffbd2e, 28px 0 0 #27c93f;
+  z-index: 2;
+}
+
+.vp-doc div[class*='language-'] > span.lang {
+  top: 7px;
+  right: 14px;
+  font-size: 11.5px;
+  font-family: var(--vp-font-family-mono);
+  font-weight: 500;
+  text-transform: uppercase;
+  color: var(--vp-c-text-3);
+}
+
+/* ------------------------------------------------------------
+   表格美化：现代圆角微边框与悬浮反馈
+   ------------------------------------------------------------ */
+.vp-doc table {
+  width: 100%;
+  display: table;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin: 1.6rem 0;
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.vp-doc th,
+.vp-doc td {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--vp-c-divider);
+  border-right: 1px solid var(--vp-c-divider);
+  text-align: left;
+}
+
+.vp-doc tr:last-child td {
+  border-bottom: none;
+}
+
+.vp-doc tr th:last-child,
+.vp-doc tr td:last-child {
+  border-right: none;
+}
+
+.vp-doc th {
+  background: var(--vp-c-bg-soft);
+  font-weight: 600;
+  color: var(--vp-c-text-1);
+  font-size: 14px;
+}
+
+.vp-doc tr:hover td {
+  background-color: var(--vp-c-brand-light);
+  transition: background-color 0.15s ease;
+}
+
+/* ------------------------------------------------------------
+   代码块美化：浅色模式下采用淡雅纯净背景
+   ------------------------------------------------------------ */
+:root:not(.dark) .vp-doc div[class*='language-'] {
+  background-color: #fbfbfa;
+  border: 1px solid #eaeaea;
+  border-radius: 8px;
+}
+
+/* ------------------------------------------------------------
+   行内高亮徽章（动作标签）
+   ------------------------------------------------------------ */
+.badge-action {
+  display: inline-block;
+  padding: 2px 7px;
+  font-size: 12.5px;
+  font-weight: 600;
+  font-family: var(--vp-font-family-mono);
+  border-radius: 5px;
+  background: var(--vp-c-brand-soft);
+  color: var(--vp-c-brand-1);
+  border: 1px solid rgba(234, 88, 12, 0.18);
+  margin: 0 2px;
+}
+
+/* ------------------------------------------------------------
+   六大动作网格卡片
+   ------------------------------------------------------------ */
+.action-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 14px;
+  margin: 20px 0;
+}
+
+.action-card-item {
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 8px;
+  padding: 14px 16px;
+  background: var(--vp-c-bg-soft);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.action-card-item:hover {
+  border-color: var(--vp-c-brand-3);
+  box-shadow: 0 2px 10px rgba(234, 88, 12, 0.08);
+}
+
+.action-card-item .card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.action-card-item .card-title {
+  font-weight: 650;
+  font-size: 15px;
+  color: var(--vp-c-text-1);
+}
+
+.action-card-item .card-cmd {
+  font-family: var(--vp-font-family-mono);
+  font-size: 12.5px;
+  padding: 1px 6px;
+  border-radius: 4px;
+  background: var(--vp-c-brand-soft);
+  color: var(--vp-c-brand-1);
+}
+
+.action-card-item .card-desc {
+  font-size: 13.5px;
+  color: var(--vp-c-text-2);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* ------------------------------------------------------------
+   首页书目卡片
+   ------------------------------------------------------------ */
 .books-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -55,15 +495,15 @@
   display: block;
   padding: 20px 22px;
   border: 1px solid var(--vp-c-divider);
-  border-radius: 14px;
+  border-radius: 10px;
   background: var(--vp-c-bg-soft);
   text-decoration: none !important;
-  transition: border-color 0.2s, transform 0.2s;
+  transition: border-color 0.2s, box-shadow 0.2s;
 }
 
 .book-card:hover {
-  border-color: var(--vp-c-brand-2);
-  transform: translateY(-2px);
+  border-color: var(--vp-c-brand-3);
+  box-shadow: 0 4px 14px rgba(234, 88, 12, 0.08);
 }
 
 .book-card h3 {

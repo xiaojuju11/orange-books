@@ -3,7 +3,7 @@ import { withBase } from 'vitepress'
 import { BOOKS } from '../../utils/book-list'
 
 const LABEL: Record<string, string> = {
-  writing: '正在写',
+  writing: '正在更新',
   planned: '排队中',
   done: '已完结',
 }
@@ -35,12 +35,19 @@ const LABEL: Record<string, string> = {
   border-radius: 14px;
   background: var(--vp-c-bg-soft);
   text-decoration: none !important;
-  transition: border-color 0.2s, transform 0.2s;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+  transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .book-card:hover {
   border-color: var(--vp-c-brand-2);
   transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(234, 106, 44, 0.08);
+}
+
+.book-card:focus-visible {
+  outline: 2px solid var(--vp-c-brand-2);
+  outline-offset: 3px;
 }
 
 .book-card h3 {
@@ -49,11 +56,12 @@ const LABEL: Record<string, string> = {
   font-weight: 600;
   color: var(--vp-c-text-1);
   line-height: 1.4;
+  letter-spacing: -0.01em;
 }
 
 .book-card p {
   margin: 0;
-  font-size: 13px;
+  font-size: 13.5px;
   line-height: 1.6;
   color: var(--vp-c-text-2);
 }
@@ -61,8 +69,9 @@ const LABEL: Record<string, string> = {
 .book-status {
   display: inline-block;
   margin-bottom: 10px;
-  padding: 1px 8px;
+  padding: 2px 9px;
   font-size: 11.5px;
+  font-weight: 500;
   border-radius: 999px;
   letter-spacing: 0.02em;
 }

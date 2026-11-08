@@ -34,7 +34,7 @@ export const BOOKS: Book[] = [
     dir: 'vibecoding',
     text: 'Vibe Coding 实战',
     tagline: '用 AI 写代码的工程纪律',
-    status: 'planned',
+    status: 'writing',
   },
   {
     dir: 'js',
