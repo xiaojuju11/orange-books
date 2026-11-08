@@ -4,7 +4,7 @@ layout: home
 hero:
   name: 小橘书房
   text: 每天学一点，写成一本
-  tagline: 六本书同时在长，哪本在写、哪本排队，一眼能看见
+  tagline: 一橘一得 · 六本书同时在长，哪本在写、哪本排队，一眼能看见
   actions:
     - theme: brand
       text: 先读 Python
@@ -24,7 +24,7 @@ features:
     details: 推到 main 自动构建，GitHub Pages 出网址，随时能发给别人看。
 ---
 
-## 书库
+## 六本书
 
 <BookShelf />
 

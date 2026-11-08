@@ -21,7 +21,7 @@ export default defineConfig({
     logo: '/logo.svg',
 
     nav: [
-      { text: '书库', link: '/' },
+      { text: '首页', link: '/' },
       {
         text: '书目',
         items: BOOKS.map((book) => ({ text: book.text, link: `/${book.dir}/` })),

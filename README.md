@@ -1,6 +1,6 @@
 # 小橘书房
 
-每天学一点，写成一本本可以读完的书。用的是和 [LangChain.js 中文入门](https://cleversnail.github.io/lang-chain-js-cn/) 同一套做法：**Markdown 写内容 → 静态站构建 → push 自动上线**。
+一橘一得：每天把学到的那一点写下来，攒成一本。用的是和 [LangChain.js 中文入门](https://cleversnail.github.io/lang-chain-js-cn/) 同一套做法：**Markdown 写内容 → 静态站构建 → push 自动上线**。
 
 六本书共用一套骨架，但**默认只有一本处于「正在写」**：
 
