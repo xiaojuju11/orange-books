@@ -27,9 +27,16 @@ function stripOrderPrefix(name: string): string {
   return name.replace(/^\d+\s*[-_.、\s]\s*/, '')
 }
 
+/** 只去掉成对包裹的引号；标题自带的（未成对）引号要原样保留 */
+function unquote(value: string): string {
+  const quoted = value.match(/^(['"])([\s\S]*)\1$/)
+  return quoted ? quoted[2] : value
+}
+
 /** 只认 title / order 两个字段，够用，不引第三方依赖 */
 function readMeta(file: string, fallback: string): { title: string; order: number } {
-  const raw = fs.readFileSync(file, 'utf8')
+  // Windows 编辑器可能写入 UTF-8 BOM，会挡住文件开头的 --- 分隔符
+  const raw = fs.readFileSync(file, 'utf8').replace(/^\uFEFF/, '')
   const block = raw.match(/^---\r?\n([\s\S]*?)\r?\n---/)
   let title = ''
   let order = Number.NaN
@@ -38,9 +45,10 @@ function readMeta(file: string, fallback: string): { title: string; order: numbe
     for (const line of block[1].split(/\r?\n/)) {
       const kv = line.match(/^([A-Za-z_][\w-]*)\s*:\s*(.*)$/)
       if (!kv) continue
-      const value = kv[2].trim().replace(/^['"]|['"]$/g, '')
+      const value = unquote(kv[2].trim())
       if (kv[1] === 'title') title = value
-      if (kv[1] === 'order') order = Number(value)
+      // 空 order 的 Number('') 是 0，会把「未排序」误当成排在最前
+      if (kv[1] === 'order' && value !== '') order = Number(value)
     }
   }
 
