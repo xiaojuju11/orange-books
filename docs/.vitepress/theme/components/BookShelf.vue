@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import { withBase } from 'vitepress'
 import { BOOKS } from '../../utils/book-list'
+import type { Book } from '../../utils/book-list'
 
-const LABEL: Record<string, string> = {
+// 用 Book['status'] 约束键：新增状态时必须补标签，避免书卡徽章空白
+const LABEL: Record<Book['status'], string> = {
   writing: '正在更新',
   planned: '排队中',
   done: '已完结',

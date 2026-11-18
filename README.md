@@ -27,7 +27,8 @@
 │  ├─ langchain/ go/ vibecoding/ js/ react/
 │  └─ .vitepress/
 │     ├─ config.mts             # 站点标题、导航、搜索
-│     ├─ utils/books.ts         # 书单 —— 唯一真相来源
+│     ├─ utils/book-list.ts     # 书单 —— 唯一真相来源（纯数据）
+│     ├─ utils/books.ts         # 生成侧边栏，复用上面的书单
 │     └─ theme/                 # 主题与首页书卡组件
 └─ scripts/new-note.mjs         # 开当天的素材条
 ```
@@ -63,7 +64,7 @@ notes: notes/2026-11-09.md, notes/2026-11-11.md
 
 ## 加一本新书（两步，没有第三步）
 
-1. `docs/.vitepress/utils/books.ts` 的 `BOOKS` 里加一行：
+1. `docs/.vitepress/utils/book-list.ts` 的 `BOOKS` 里加一行：
 
    ```ts
    { dir: 'rust', text: 'Rust 入门', tagline: '所有权 · 生命周期', status: 'planned' }
@@ -72,6 +73,8 @@ notes: notes/2026-11-09.md, notes/2026-11-11.md
 2. 建目录 `docs/rust/index.md`，写章节地图。
 
 导航、侧边栏、首页卡片会自动出现。
+
+`books.ts` 不存书单：它只是从这里导入 `BOOKS`，扫描 `docs/<书>/` 生成侧边栏；加书只改 `book-list.ts`。
 
 ## 发布
 

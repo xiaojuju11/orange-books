@@ -22,7 +22,7 @@ features:
   - title: 每章都能跑
     details: 示例直接复制即可执行，附带实测预期输出；对不上说明环境有问题，不是示例有问题。
   - title: 多书共用一套骨架
-    details: 加新书只需在 `books.ts` 登记一行并建目录，导航、侧边栏、书卡全自动同步。
+    details: 加新书只需在 `book-list.ts` 的 `BOOKS` 里加一行并建目录，导航、侧边栏、书卡全自动同步。
   - title: push 即上线
     details: 推送到 `main` 分支自动流水线构建，GitHub Pages 实时发布，随时分享给同频读者。
 ---
