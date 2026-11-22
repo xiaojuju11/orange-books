@@ -33,6 +33,22 @@ function unquote(value: string): string {
   return quoted ? quoted[2] : value
 }
 
+/** 找正文里的一级标题；跳过 ``` / ~~~ 围栏里的 "# 注释"，免得把代码注释当成页面标题 */
+function findH1(body: string): string {
+  let fenced = false
+  for (const line of body.split(/\r?\n/)) {
+    if (/^\s*(```|~~~)/.test(line)) {
+      fenced = !fenced
+      continue
+    }
+    if (!fenced) {
+      const m = line.match(/^#\s+(.+)$/)
+      if (m) return m[1].trim()
+    }
+  }
+  return ''
+}
+
 /** 只认 title / order 两个字段，够用，不引第三方依赖 */
 function readMeta(file: string, fallback: string): { title: string; order: number } {
   // Windows 编辑器可能写入 UTF-8 BOM，会挡住文件开头的 --- 分隔符
@@ -54,8 +70,7 @@ function readMeta(file: string, fallback: string): { title: string; order: numbe
 
   if (!title) {
     const body = block ? raw.slice(block[0].length) : raw
-    const h1 = body.match(/^#\s+(.+)$/m)
-    title = h1 ? h1[1].trim() : stripOrderPrefix(fallback)
+    title = findH1(body) || stripOrderPrefix(fallback)
   }
 
   return { title, order: Number.isFinite(order) ? order : Number.MAX_SAFE_INTEGER }
