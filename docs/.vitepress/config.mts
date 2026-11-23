@@ -1,5 +1,16 @@
 import { defineConfig } from 'vitepress'
-import { BOOKS, buildSidebars } from './utils/books'
+import { BOOKS, buildBookStats, buildSidebars } from './utils/books'
+import { formatDay, formatWords } from './utils/doc-meta'
+
+// 构建时扫一遍 docs/，把每本书的真实进度（章节数、字数、最近更新）注入客户端，
+// 首页书卡直接用，不额外发请求。数字在这里就格式化成字符串，客户端不必再引 node 相关的模块。
+// 注意：新增章节后 dev 需要重启，才会重新统计。
+const BOOK_STATS = Object.fromEntries(
+  Object.entries(buildBookStats()).map(([dir, s]) => [
+    dir,
+    { chapters: s.chapters, words: formatWords(s.words), updatedAt: formatDay(s.updatedAt) },
+  ]),
+)
 
 export default defineConfig({
   lang: 'zh-CN',
@@ -9,6 +20,13 @@ export default defineConfig({
   base: process.env.DOCS_BASE || '/',
   cleanUrls: true,
   lastUpdated: true,
+
+  vite: {
+    define: {
+      __BOOK_STATS__: JSON.stringify(BOOK_STATS),
+    },
+  },
+
   head: [
     ['link', { rel: 'icon', type: 'image/svg+xml', href: '/logo.svg' }],
   ],

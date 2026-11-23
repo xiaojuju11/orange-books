@@ -5,6 +5,9 @@ on:
     branches: [main]
     paths:
       - 'docs/**'
+      - 'scripts/**'
+      - 'tests/**'
+      - 'package.json'
       - '.github/workflows/deploy.yml'
   workflow_dispatch:
 
@@ -25,11 +28,18 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          # 自检与单测直接用 node 读 .ts（需要 Node ≥ 22.18 的类型擦除）
+          node-version: 22
           cache: npm
 
       - name: Install
         run: npm ci
+
+      - name: Check books
+        run: npm run check
+
+      - name: Unit tests
+        run: npm test
 
       - name: Build
         run: npm run docs:build

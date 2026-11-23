@@ -4,9 +4,11 @@ import { fileURLToPath } from 'node:url'
 
 import { BOOKS } from './book-list'
 import type { Book } from './book-list'
+import { collectBookStats, readDocMeta, stripOrderPrefix } from './doc-meta'
+import type { BookStats } from './doc-meta'
 
 export { BOOKS }
-export type { Book }
+export type { Book, BookStats }
 
 const DOCS_DIR = fileURLToPath(new URL('../../', import.meta.url))
 
@@ -21,59 +23,6 @@ interface SidebarItem {
   link?: string
   collapsed?: boolean
   items?: SidebarItem[]
-}
-
-function stripOrderPrefix(name: string): string {
-  return name.replace(/^\d+\s*[-_.、\s]\s*/, '')
-}
-
-/** 只去掉成对包裹的引号；标题自带的（未成对）引号要原样保留 */
-function unquote(value: string): string {
-  const quoted = value.match(/^(['"])([\s\S]*)\1$/)
-  return quoted ? quoted[2] : value
-}
-
-/** 找正文里的一级标题；跳过 ``` / ~~~ 围栏里的 "# 注释"，免得把代码注释当成页面标题 */
-function findH1(body: string): string {
-  let fenced = false
-  for (const line of body.split(/\r?\n/)) {
-    if (/^\s*(```|~~~)/.test(line)) {
-      fenced = !fenced
-      continue
-    }
-    if (!fenced) {
-      const m = line.match(/^#\s+(.+)$/)
-      if (m) return m[1].trim()
-    }
-  }
-  return ''
-}
-
-/** 只认 title / order 两个字段，够用，不引第三方依赖 */
-function readMeta(file: string, fallback: string): { title: string; order: number } {
-  // Windows 编辑器可能写入 UTF-8 BOM，会挡住文件开头的 --- 分隔符
-  const raw = fs.readFileSync(file, 'utf8').replace(/^\uFEFF/, '')
-  const block = raw.match(/^---\r?\n([\s\S]*?)\r?\n---/)
-  let title = ''
-  let order = Number.NaN
-
-  if (block) {
-    for (const line of block[1].split(/\r?\n/)) {
-      const kv = line.match(/^([A-Za-z_][\w-]*)\s*:\s*(.*)$/)
-      if (!kv) continue
-      const value = unquote(kv[2].trim())
-      if (kv[1] === 'title') title = value
-      // 空 order 的 Number('') 是 0，会把「未排序」误当成排在最前
-      if (kv[1] === 'order' && value !== '') order = Number(value)
-    }
-  }
-
-  if (!title) {
-    const body = block ? raw.slice(block[0].length) : raw
-    title = findH1(body) || stripOrderPrefix(fallback)
-  }
-
-  return { title, order: Number.isFinite(order) ? order : Number.MAX_SAFE_INTEGER }
 }
 
 function mdFiles(dir: string): string[] {
@@ -91,9 +40,10 @@ function sortPages(pages: PageItem[]): PageItem[] {
   )
 }
 
+/** 标题、顺序、BOM、围栏代码块这些解析细节都在 doc-meta.ts，这里只管拼侧边栏 */
 function toItem(dir: string, fileName: string, urlBase: string): PageItem {
   const slug = fileName.replace(/\.md$/, '')
-  const { title, order } = readMeta(path.join(dir, fileName), slug)
+  const { title, order } = readDocMeta(path.join(dir, fileName), slug)
   return { text: title, link: `${urlBase}${slug}`, order }
 }
 
@@ -138,4 +88,9 @@ export function buildSidebars(): Record<string, SidebarItem[]> {
   const result: Record<string, SidebarItem[]> = {}
   for (const book of BOOKS) result[`/${book.dir}/`] = buildSidebar(book)
   return result
+}
+
+/** 首页书卡上的真实进度：章节数、字数、最近更新，构建时算一次，注入到客户端 */
+export function buildBookStats(): Record<string, BookStats> {
+  return collectBookStats(DOCS_DIR, BOOKS)
 }
